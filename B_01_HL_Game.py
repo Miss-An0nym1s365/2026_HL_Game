@@ -35,7 +35,6 @@ without running out of guesses.
 Good luck player 🤝
     """)
 
-
 # checks for
 def int_check(question):
     """Checks users enter an integer more than / equal to 1"""
