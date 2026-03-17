@@ -36,25 +36,43 @@ Good luck player 🤝
     """)
 
 # checks for
-def int_check(question):
-    """Checks users enter an integer more than / equal to 1"""
+def int_check(question, low=None, high=None, exit_code=None):
+
+    # if any integer is allowed
+    if low is None and high is None:
+        error = "Please enter an integer"
+
+    # if the number neds to be more than an
+    # integer (ie: rounds / 'high number')
+    elif low is not None and high is None:
+        error = (f"Please enter an integer that is"
+                 f"more than / equal to {low}")
+
+    else:
+        error = (f"Please enter an integer that"
+                 f"is between {low} and {high} (inclusive)")
+
     while True:
-        error = "Please enter an integer more than / equal to 1"
+        response = input(question).lower()
 
-        to_check = input(question)
-
-        # check for infinite mode
-        if to_check == "":
-            return "infinite"
-
+        # check for infinte mode / exit code
+        if response == exit_code:
+            return response
 
         try:
-            response = int(to_check)
+            response = int(response)
 
-            if response < 1:
+            # check the integer not too high or low
+            if low is not None and response < low:
                 print(error)
+
+            # check response is more than the low number
+            elif high is not None and response > high:
+                print(error)
+
+            # if response is valid, return it
             else:
-                return response
+                 return response
 
         except ValueError:
             print(error)
@@ -75,11 +93,16 @@ if want_instructions == "yes":
     instructions()
 
 # Ask user for number of rounds / infinite mode
-num_rounds = int_check("How many rounds would you like? Push <enter> for infinite mode: ")
+num_rounds = int_check("Rounds <enter> for infinite mode: ",
+                       low=1, exit_code="")
 
 if num_rounds == "infinite":
     mode = "infinite"
     num_rounds = 5
+
+# get game parameters
+low_num = int_check("Low Number? ")
+high_num = int_check("High Number? ", low=low_num+1)
 
 # Game loop starts here
 while rounds_played < num_rounds:

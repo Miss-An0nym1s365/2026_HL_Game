@@ -59,4 +59,3 @@ while guess != "xxx":
     guess = int_check("Guess: ", low=0, high=10, exit_code="xxx")
     print(f"You guessed {guess}")
     print()
-    
