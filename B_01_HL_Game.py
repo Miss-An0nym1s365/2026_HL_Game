@@ -1,4 +1,7 @@
-# functions go here
+import math
+
+
+# checks user enter yes (y) or no (n)
 
 def yes_no(question):
     """Checks user response to a question is yes / no (y/n), returns 'yes' or 'no' """
@@ -77,6 +80,14 @@ def int_check(question, low=None, high=None, exit_code=None):
         except ValueError:
             print(error)
 
+def calc_guesses(low, high):
+    num_range = high - low + 1
+    max_raw = math.log2(num_range)
+    max_upped = math.ceil(max_raw)
+    max_guesses = max_upped + 1
+    return max_guesses
+
+
 # Main Routine Starts here
 
 # Initialise game variables
@@ -103,6 +114,7 @@ if num_rounds == "infinite":
 # get game parameters
 low_num = int_check("Low Number? ")
 high_num = int_check("High Number? ", low=low_num+1)
+guesses_allowed = calc_guesses(low_num, high_num)
 
 # Game loop starts here
 while rounds_played < num_rounds:

@@ -22,8 +22,8 @@ to_test = [
 for item in to_test:
     # retrieve test case and expected value
     low_num = item[0]
-    high_num = [1]
-    expected = [2]
+    high_num = item[1]
+    expected = item[2]
 
     # get actual value (ie: test ticket function)
     actual = calc_guesses(low_num, high_num)
