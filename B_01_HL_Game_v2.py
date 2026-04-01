@@ -28,12 +28,12 @@ def instructions():
 
 To begin, choose the number of rounds and either customise 
 the game parameters or go with the default game (where the
-secret number will be between 1 and 100).
+secret number will be between 1 and 10).
 
 Then you must choose how many rounds you'd like to play, 
 select <enter> for infinite mode.
 
-Your end goal is to try to guess the 🔐secret🔐 number 
+Your end goal is to try to guess the 🤫secret🤫 number 
 without running out of guesses.
 
 Good luck player 🤝
@@ -97,8 +97,11 @@ rounds_played = 0
 end_game = "no"
 feedback = ""
 
-game_history = []
-all_scores = []
+game_history = [0]
+all_scores = [0]
+best_score = []
+worst_score = []
+average_score = []
 
 print("⬆️⬆️⬆️Welcome to the Higher Lower Game!⬇️⬇️⬇️")
 print()
@@ -146,7 +149,7 @@ while rounds_played < num_rounds:
     # round starts here
     # set guesses used to zero at the start of each round
     guesses_used = 0
-    already_guessed = [0]
+    already_guessed = []
 
     # Choose a 'secret' number between the low and high number
     secret = random.randint(low_num, high_num)
@@ -166,6 +169,7 @@ while rounds_played < num_rounds:
 
         # check that guess is not duplicate
         if guess in already_guessed:
+            
             print(f"You've already guesses {guess}. You've *still* used "
                   f"{guesses_used} / {guesses_allowed} guesses ")
             continue
@@ -176,7 +180,36 @@ while rounds_played < num_rounds:
 
         guesses_used += 1
 
-        print()
+        # If we have guesses left...
+        if guess < secret and guesses_used < guesses_allowed:
+            feedback = ("Too low, please try a higher number."
+                        f"You've used {guesses_used} / {guesses_allowed} guesses ")
+        elif guess > secret and guesses_used < guesses_allowed:
+            feedback = ("Too high, please try a lower number."
+                        f"You've used {guesses_used} / {guesses_allowed} guesses ")
+        elif guess == secret:
+
+            if guesses_used == 1:
+                feedback = "🍀🍀 Lucky! You got it on the first guess. 🍀🍀"
+            elif guesses_used == guesses_allowed:
+                feedback = f"Phew! You got it in {guesses_used} guesses."
+            else:
+                feedback = f" Well done! you guessed the secret number in {guesses_used} guesses!"
+        else:
+            feedback = "sorry you got no more guesses. YOU LOSE HAHA"
+
+        # print feedback to user
+        print(feedback)
+
+        # additional feedback (warn user that they are running out of guesses)
+        if guesses_used == guesses_allowed - 1:
+            print("\n💣💣💣Careful - you have one guess left!💣💣💣\n")
+
+    print()
+    print("End of round")
+
+
+    print()
 
     # round ends here
 
