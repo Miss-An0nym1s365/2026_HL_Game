@@ -99,8 +99,8 @@ feedback = ""
 
 game_history = [0]
 all_scores = [0]
-best_score = []
-worst_score = []
+best_score = [1]
+worst_score = [-1]
 average_score = []
 
 print("⬆️⬆️⬆️Welcome to the Higher Lower Game!⬇️⬇️⬇️")
@@ -196,7 +196,7 @@ while rounds_played < num_rounds:
             else:
                 feedback = f" Well done! you guessed the secret number in {guesses_used} guesses!"
         else:
-            feedback = "sorry you got no more guesses. YOU LOSE HAHA"
+            feedback = f"Sorry you have no more guesses, the secret number was {secret}. YOU LOSE HAHA 🫵😂"
 
         # print feedback to user
         print(feedback)
@@ -240,6 +240,11 @@ if rounds_played > 0:
     best_score = all_scores[0]
     worst_score = all_scores[-1]
     average_score = sum(all_scores) / len(all_scores)
+
+    rounds_won = rounds_played - rounds_tied - rounds_lost
+    percent_won = rounds_won / rounds_played * 100
+    percent_lost = rounds_lost / rounds_played * 100
+    percent_tied = 100 - percent_won - percent_lost
 
     # output statistics
     print("\n📊📊📊 Statistics 📊📊📊")
